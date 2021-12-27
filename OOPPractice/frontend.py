@@ -115,3 +115,4 @@ b6 = Button(window, text="Close", width=12, command=window.destroy)
 b6.grid(column=3, row=7)
 
 window.mainloop()
+del database
