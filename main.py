@@ -92,7 +92,6 @@ class LoginScreenSuccess(Screen):
 
 
 class ImageButton(ButtonBehavior, Image, HoverBehavior):
-
     pass
 
 
