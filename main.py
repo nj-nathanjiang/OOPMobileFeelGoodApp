@@ -1,6 +1,9 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
+from hoverable import HoverBehavior
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 import json
 from datetime import datetime
 import random
@@ -11,6 +14,7 @@ Builder.load_file("design.kv")
 class LoginScreen(Screen):
 
     def sign_up(self):
+        self.manager.transition.direction = "left"
         self.manager.current = "sign_up_screen"
 
     def login(self, uname, pword):
@@ -22,10 +26,21 @@ class LoginScreen(Screen):
             if users[uname]["password"] == pword:
                 self.manager.current = "login_screen_success"
             else:
-                self.ids.login_wrong.text = "Wrong username or password"
+                self.ids.warning.text = "Wrong username or password"
 
         except KeyError:
-            self.ids.login_wrong.text = "Wrong username or password"
+            self.ids.warning.text = "Wrong username or password"
+
+    def show_password(self):
+        if self.ids.password.password:
+            self.ids.password.password = False
+            self.ids.show_password.text = "Hide Password"
+        else:
+            self.ids.password.password = True
+            self.ids.show_password.text = "Show Password"
+
+    def forgot_password(self):
+        self.ids.warning.text = "Make a new account"
 
 
 class RootWidget(ScreenManager):
@@ -74,6 +89,11 @@ class LoginScreenSuccess(Screen):
         else:
             quote = "You can only input happy, sad, or unloved"
         self.ids.quote_label.text = quote.strip()
+
+
+class ImageButton(ButtonBehavior, Image, HoverBehavior):
+
+    pass
 
 
 class MainApp(App):
