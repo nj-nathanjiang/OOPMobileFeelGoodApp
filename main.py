@@ -8,6 +8,7 @@ import json
 from datetime import datetime
 import random
 
+
 Builder.load_file("design.kv")
 
 
